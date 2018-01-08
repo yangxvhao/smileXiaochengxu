@@ -1,10 +1,8 @@
 
 let getComments = (ctx, cb) => {
-
   let tableId = getApp().globalData.tableId,
-    Comments = new wx.BaaS.TableObject(tableId)
-
-  Comments.find()
+  Comments = new wx.BaaS.TableObject(tableId)
+  Comments.limit(ctx.data.limit).offset(Math.ceil(Math.random() * 1000000) % ctx.data.count).find()
     .then(res => cb(res))
     .catch(err => console.dir(err))
 }

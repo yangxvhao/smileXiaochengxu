@@ -9,6 +9,8 @@ Page({
     nick:'昵称',
     tableID: app.globalData.tableId, 
     comments: [],
+    limit:30,
+    count:100
   },
 
   onLoad(options) {
@@ -16,46 +18,47 @@ Page({
       this.setData({
         profile: wx.BaaS.storage.get('userinfo')
       })
-      // this.fetchBookList()
+      this.fetchCommentList()
     })
   },
 
   // 获取 comments 数据
-  fetchBookList() {
+  fetchCommentList() {
     utils.getComments(this, (res) => {
       this.setData({
-        comments: res.data.objects // comments array, mock data in mock/mock.js
+        comments: res.data.objects ,// comments array, mock data in mock/mock.js
+        count: res.data.meta.total_count,
       })
     })
   },
 
   // 绑定添加书目的输入框事件，设置添加的数目名称
-  // bindCreateBookNameInput(e) {
+  // bindCreateCommentNameInput(e) {
   //   let that = this
   //   let value = e.detail.value
   //   this.setData({
-  //     creatingBookName: value
+  //     creatingCommentName: value
   //   })
   
   // },
 
   // 绑定添加书目的提交按钮点击事件，向服务器发送数据
-  // createBook(e) {
-  //   utils.addBook(this, (res) => {
+  // createComment(e) {
+  //   utils.addComment(this, (res) => {
   //     this.setData({
-  //       createBookValue: '',
+  //       createCommentValue: '',
   //     })
-  //     this.fetchBookList()
+  //     this.fetchCommentList()
   //   })
   // },
 
   // 绑定每一行书目的“编辑”按钮点击事件，控制输入框和文本显示
-  // editBookButtonClicked(e) {
+  // editCommentButtonClicked(e) {
   //   let that = this
   //   let activeIndex = e.currentTarget.dataset.index
-  //   let bookList = this.data.bookList
+  //   let CommentList = this.data.CommentList
 
-  //   bookList.forEach((elem, idx) => {
+  //   CommentList.forEach((elem, idx) => {
   //     if (activeIndex == idx) {
   //      elem.isEditing = true
   //     } else {
@@ -64,38 +67,38 @@ Page({
   //   })
 
   //   that.setData({
-  //     bookList
+  //     CommentList
   //   })
   // },
 
   // 绑定每一行书目的输入框事件，设定当前正在编辑的书名
-  // bindEditBookNameInput(e) {
-  //   let bookName = e.detail.value
+  // bindEditCommentNameInput(e) {
+  //   let CommentName = e.detail.value
   //   this.setData({
-  //     editingBookName: bookName,
+  //     editingCommentName: CommentName,
   //   })
   // },
 
   // 绑定修改书目的提交按钮点击事件，向服务器发送数据
-  // updateBook(e) {
+  // updateComment(e) {
 
   //   this.setData({
-  //     curRecordId: e.target.dataset.bookId,
+  //     curRecordId: e.target.dataset.CommentId,
   //   })
 
-  //   utils.updateBook(this, (res) => {
-  //     this.fetchBookList()
+  //   utils.updateComment(this, (res) => {
+  //     this.fetchCommentList()
   //     this.setData({curRecordId: ''})
   //   })
   // },
 
   // // 删除当前行的书目
-  // deleteBook(e) {
+  // deleteComment(e) {
   //   this.setData({
-  //     curRecordId: e.target.dataset.bookId,
+  //     curRecordId: e.target.dataset.CommentId,
   //   })
-  //   utils.deleteBook(this, (res) => {
-  //     this.fetchBookList()
+  //   utils.deleteComment(this, (res) => {
+  //     this.fetchCommentList()
   //     this.setData({curRecordId: ''})
   //   })
   // },
